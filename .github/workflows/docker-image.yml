@@ -1,0 +1,40 @@
+name: Docker Image CI
+
+on:
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      BRANCH: ${{ github.base_ref }}    
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # - uses: Klemensas/action-autotag@stable
+    #   with:
+    #     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    #     tag_prefix: "v"        
+
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+
+    - name: Step that prints name of pull request's base branch
+      run: |
+        echo "Pull request's base branch is: ${BASE_BRANCH}"
+      env:
+        BASE_BRANCH: ${{ github.base_ref }}
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag csturion/node-helloworld-github-actions:${{ env.BRANCH }}
+      
+    - name: Docker Push
+      run: docker push csturion/node-helloworld-github-actions:${{ env.BRANCH }}
