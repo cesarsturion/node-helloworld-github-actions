@@ -1,0 +1,39 @@
+name: Docker Image CI
+
+on:
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # - uses: Klemensas/action-autotag@stable
+    #   with:
+    #     GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+    #     tag_prefix: "v"        
+
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+
+    - name: Set output
+      id: vars
+      run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+
+    - name: Check output
+      run: echo ${{ steps.vars.outputs.short_ref }}
+
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag csturion/node-helloworld-github-actions:develop
+      
+    - name: Docker Push
+      run: docker push csturion/node-helloworld-github-actions:develop
