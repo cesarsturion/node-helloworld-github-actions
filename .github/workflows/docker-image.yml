@@ -32,7 +32,7 @@ jobs:
         BASE_BRANCH: ${{ github.base_ref }}
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag csturion/node-helloworld-github-actions:develop
+      run: docker build . --file Dockerfile --tag csturion/node-helloworld-github-actions:${{ env.BASE_BRANCH }}
       
     - name: Docker Push
-      run: docker push csturion/node-helloworld-github-actions:develop
+      run: docker push csturion/node-helloworld-github-actions:${{ env.BASE_BRANCH }}
