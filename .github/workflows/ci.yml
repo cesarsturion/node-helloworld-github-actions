@@ -2,6 +2,8 @@ name: Test Reusable WorkFlow user
 
 on: 
   workflow_dispatch:
+  pull_request:
+    branches: [ develop ]
 
 jobs:
   do-it: 
