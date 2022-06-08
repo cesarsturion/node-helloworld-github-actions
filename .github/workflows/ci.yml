@@ -7,6 +7,16 @@ on:
 
 jobs:
   do-it: 
+    docker:
+      uses: cesarsturion/reusable-workflow/.github/workflows/createpublishdockerimage.yml@main
+      with:
+        image_name: node-helloworld-github-actions
+        tag: $GITHUB_RUN_NUMBER
+      secrets:
+        registry_username: ${{ secrets.DOCKER_USER }}
+        registry_password: ${{ secrets.DOCKER_PASSWORD }}
+
+
     runs-on: ubuntu-latest
 
     steps: 
@@ -15,14 +25,6 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!
 
-      - name: Run docker action
-        uses: cesarsturion/reusable-workflow/.github/workflows/createpublishdockerimage.yml@main
-        with:
-          image_name: node-helloworld-github-actions
-          tag: $GITHUB_RUN_NUMBER
-        secrets:
-          registry_username: ${{ secrets.DOCKER_USER }}
-          registry_password: ${{ secrets.DOCKER_PASSWORD }}
 
 
 
