@@ -15,8 +15,9 @@ jobs:
       registry_username: ${{ secrets.DOCKER_USER }}
       registry_password: ${{ secrets.DOCKER_PASSWORD }}
 
-  released: 
+  release: 
     needs: build
+    runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
 
