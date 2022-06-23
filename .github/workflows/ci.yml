@@ -1,9 +1,19 @@
 name: Test Reusable WorkFlow user
 
-on: 
+on:
   workflow_dispatch:
+  push:
+    branches:
+      - 'feature/*'
+      - '!master'
+      - '!main'
   pull_request:
-    branches: [ develop ]
+    branches: 
+      - 'master'
+      - 'main'
+  release:
+    types:
+      - 'created'
 
 jobs:
   build:

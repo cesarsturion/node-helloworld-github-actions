@@ -1,0 +1,35 @@
+name: Notify on Release
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'feature/*'
+      - '!master'
+      - '!main'
+  pull_request:
+    branches: 
+      - 'master'
+      - 'main'
+  release:
+    types:
+      - 'created'
+
+jobs:
+  slack-message:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Set Text
+        run: echo "MESSAGE=Send text in Slack" >> $GITHUB_ENV
+
+
+      - name: Text Message
+        run: |
+          curl -X POST -H 'Content-type: application/json' 
+          --data '{"text":"Hello, World!"}' 
+          ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Slack Message
+        run: |
+          curl -X POST -H 'content-type: application/json'
+           -- data '{"text":"$MESSAGE"}' 
+           ${{ secrets.SLACK_WEBHOOK }}
