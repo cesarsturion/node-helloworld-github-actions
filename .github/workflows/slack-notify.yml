@@ -28,4 +28,4 @@ jobs:
 
       - name: Slack Message
         run: |
-          curl -X POST -H 'content-type: application/json' -- data '{"text":"$MESSAGE"}' ${{ secrets.SLACK_WEBHOOK }}
+          curl -X POST -H 'content-type: application/json' -- data '{"text":"Send text in Slack"}' ${{ secrets.SLACK_WEBHOOK }}
