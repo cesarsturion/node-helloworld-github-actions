@@ -17,6 +17,9 @@ on:
 jobs:
   slack-message:
     runs-on: ubuntu-latest
+    steps: 
+
       - name: Text Message
         run: |
           curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World! >>> ${{ github.run_id }} <<<"}' https://hooks.slack.com/services/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
+
