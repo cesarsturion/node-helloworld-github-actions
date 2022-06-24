@@ -21,4 +21,4 @@ jobs:
 
       - name: Text Message
         run: |
-          curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World! >>> ${{ github.run_id }} <<<"}' https://hooks.slack.com/services/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
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World! AB"}' https://hooks.slack.com/services/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
