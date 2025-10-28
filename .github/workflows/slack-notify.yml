@@ -1,0 +1,24 @@
+name: Notify on Release
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'feature/*'
+      - '!master'
+      - '!main'
+  pull_request:
+    branches: 
+      - 'master'
+      - 'main'
+  release:
+    types:
+      - 'created'
+
+jobs:
+  slack-message:
+    runs-on: ubuntu-latest
+    steps: 
+
+      - name: Text Message
+        run: |
+          curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World! AB"}' https://hooks.slack.com/services/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
